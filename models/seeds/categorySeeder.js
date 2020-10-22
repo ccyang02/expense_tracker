@@ -1,24 +1,29 @@
 // test case
 const categories = [
   {
-    name: 'residence',
-    image: 'fas fa-home'
+    code: 'residence',
+    name: '家居物業',
+    icon: 'fas fa-home'
   },
   {
-    name: 'transportation',
-    image: 'fas fa-shuttle-van'
+    code: 'transportation',
+    name: '交通出行',
+    icon: 'fas fa-shuttle-van'
   },
   {
-    name: 'amusement',
-    image: 'fas fa-grin-beam'
+    code: 'amusement',
+    name: '休閒娛樂',
+    icon: 'fas fa-grin-beam'
   },
   {
-    name: 'food',
-    image: 'fas fa-utensils'
+    code: 'food',
+    name: '餐飲食品',
+    icon: 'fas fa-utensils'
   },
   {
-    name: 'others',
-    image: 'fas fa-pen'
+    code: 'others',
+    name: '其他',
+    icon: 'fas fa-pen'
   }
 ]
 
