@@ -1,6 +1,22 @@
-<p>Hi I am index.html</p>
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+    aria-haspopup="true" aria-expanded="false">
+    類別
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    {{#each categories}}
+    <a class="dropdown-item" href="/index?category={{this.code}}">{{this.name}}</a>
+    {{/each}}
+  </div>
+</div>
 
-<a href="/record/:id/edit" class="btn btn-primary">修改</a>
-<a href="/record/:id/delte" class="btn btn-primary">刪除</a>
+{{#each records}}
+<i class="{{this.icon}}"></i>
+{{this.name}}
+{{this.date}}
+{{this.amount}}
+<a href="/record/{{this._id}}/edit" class="btn btn-primary">修改</a>
+<a href="/record/{{this._id}}/delte" class="btn btn-primary">刪除</a>
+{{/each}}
 
 <a href="/record/new" class="btn btn-primary">新增支出</a>
