@@ -1,6 +1,7 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
 const mongoose = require('mongoose')
+const methodOverride = require('method-override')
 const bodyParser = require('body-parser')
 const app = express()
 const port = 3000
@@ -8,6 +9,7 @@ const port = 3000
 const routes = require('./routes')
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
+app.use(methodOverride('_method'))
 app.use(routes)
 app.use(bodyParser.urlencoded({ extended: true }))
 

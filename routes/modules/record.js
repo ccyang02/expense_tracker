@@ -14,6 +14,7 @@ router.get('/new', (req, res) => {
     .then(categories => {
       return res.render('new', { categories, unsavedData })
     })
+    .catch(error => console.log(error))
 })
 
 router.post('/new', (req, res) => {
@@ -35,12 +36,40 @@ router.post('/new', (req, res) => {
   })
 })
 
-router.get('/:rid/edit', (req, res) => {
+router.get('/edit/:rid', (req, res) => {
   // render to edit.html
+  const rid = req.params.rid
+  Category
+    .find()
+    .lean()
+    .then(categories => {
+      Record
+        .find({ _id: rid })
+        .lean()
+        .then(output => {
+          return res.render('edit', { data: output[0], categories })
+        })
+    })
+    .catch(error => console.log(error))
 })
 
-router.put('/:rid/edit', (req, res) => {
+router.put('/edit/:rid', (req, res) => {
   // render to edit.html
+  console.log('Here!')
+  const rid = req.params.rid
+  let newData = {}
+  newData = Object.assign(newData, req.body) // name, date, category, amount
+  const tokens = newData.date.split('/')
+  newData.date = Date(tokens[0], tokens[1], tokens[2])
+  newData.amount = Number(newData.amount)
+
+  return Record.findById(rid)
+    .then(record => {
+      Object.assign(record, newData)
+      return record.save()
+    })
+    .then(() => res.redirect(`/record/edit/${rid}`))
+    .catch(error => console.log(error))
 })
 
 router.delete('/:rid/delete', (req, res) => {
