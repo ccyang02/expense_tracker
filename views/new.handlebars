@@ -1,0 +1,32 @@
+<form action="/record/new" method="post">
+
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text">名稱</span>
+    </div>
+    <input type="text" name="name" value="{{#if unsavedData}} {{unsavedData.name}} {{/if}}" class="form-control">
+  </div>
+
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text">日期</span>
+    </div>
+    <input type="text" name="date" value="{{#if unsavedData}} {{unsavedData.date}} {{/if}}" class="form-control">
+  </div>
+
+  <select class="dropdown" name="category" value="{{#if unsavedData}} {{unsavedData.category}} {{/if}}">
+    {{#each categories}}
+    <option value="this.code">{{this.name}}</option>
+    {{/each}}
+  </select>
+
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text">$</span>
+      <span class="input-group-text">0.00</span>
+    </div>
+    <input type="text" name="amount" value="{{#if unsavedData}} {{unsavedData.amount}} {{/if}}" class="form-control">
+  </div>
+
+  <button type="submit" class="btn btn-primary">送出</button>
+</form>
