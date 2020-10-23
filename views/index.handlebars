@@ -16,7 +16,10 @@
 {{this.date}}
 {{this.amount}}
 <a href="/record/edit/{{this._id}}" class="btn btn-primary">修改</a>
-<a href="/record/{{this._id}}/delete" class="btn btn-primary">刪除</a>
+<form action="/record/delete/{{this._id}}?_method=DELETE" method="post">
+  <button class="btn btn-primary" type="submit">刪除</button>
+</form>
+
 {{/each}}
 
 <a href="/record/new" class="btn btn-primary">新增支出</a>

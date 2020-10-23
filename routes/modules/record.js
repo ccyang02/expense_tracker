@@ -55,7 +55,6 @@ router.get('/edit/:rid', (req, res) => {
 
 router.put('/edit/:rid', (req, res) => {
   // render to edit.html
-  console.log('Here!')
   const rid = req.params.rid
   let newData = {}
   newData = Object.assign(newData, req.body) // name, date, category, amount
@@ -72,8 +71,13 @@ router.put('/edit/:rid', (req, res) => {
     .catch(error => console.log(error))
 })
 
-router.delete('/:rid/delete', (req, res) => {
+router.delete('/delete/:rid', (req, res) => {
   // render to index.html
+  const rid = req.params.rid
+  Record.findById(rid)
+    .then(output => { output.remove() })
+    .then(() => res.redirect('/'))
+    .catch(error => console.log(error))
 })
 
 
