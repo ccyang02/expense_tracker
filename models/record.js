@@ -16,6 +16,7 @@ const recordSchema = new Schema({
   },
   amount: {
     type: Number,
+    min: [0, 'Cannot be zero or negative.'],
     required: true
   },
 })

@@ -46,7 +46,8 @@
         <div class="col-4 align-self-center">
           <a href="/record/edit/{{this._id}}" class="btn btn-sm btn-outline-success">修改</a>
           <form action="/record/delete/{{this._id}}?_method=DELETE" method="post" style="display: inline;">
-            <button class="btn btn-sm btn-outline-danger" type="submit">刪除</button>
+            <button class="btn btn-sm btn-outline-danger" type="submit"
+              onclick="return confirm('確定刪除這筆紀錄嗎？')">刪除</button>
           </form>
         </div>
       </div>

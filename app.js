@@ -1,5 +1,6 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
+const session = require('express-session')
 const mongoose = require('mongoose')
 const methodOverride = require('method-override')
 const bodyParser = require('body-parser')
@@ -7,12 +8,16 @@ const app = express()
 const port = 3000
 
 const routes = require('./routes')
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
+app.engine('handlebars', exphbs({
+  defaultLayout: 'main',
+  helpers: require('./utils/hbsHelpers.js')
+}))
 app.set('view engine', 'handlebars')
 app.use(methodOverride('_method'))
 app.use(express.static('public'))
 app.use(routes)
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(session({ secret: 'secret', resave: false, saveUninitialized: true }))
 
 mongoose.connect('mongodb://localhost/expense-tracker', { useNewUrlParser: true, useUnifiedTopology: true })
 const db = mongoose.connection

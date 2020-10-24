@@ -3,6 +3,18 @@
     <div class="row my-3">
       <div class="col-12 font-weight-bold text-center" style="font-size: 1.5rem;">請修改你的支出</div>
     </div>
+    {{#if isFail}}
+    <div class="row my-1">
+      <div
+        class="alert {{#if (isEqual isFail "true")}}alert-danger{{/if}} {{#if (isEqual isFail "false")}}alert-success{{/if}} alert-dismissible fade show"
+        role="alert" style="width: 100%;">
+        {{{hint}}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    </div>
+    {{/if}}
     <hr />
     <div class="row my-3 mt-4">
       <div class="col-3 align-self-center text-right">名稱*：</div>
