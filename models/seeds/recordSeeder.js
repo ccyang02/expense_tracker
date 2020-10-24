@@ -1,32 +1,23 @@
-// test case
-const records = [
-  {
-    name: '打牌輸錢',
-    category: 'amusement',
-    date: new Date(2020, 10, 20),
-    amount: 2000,
-  },
-  {
-    name: '家人吃餐廳',
-    category: 'food',
-    date: new Date(2020, 10, 21),
-    amount: 666,
-  }
-]
-
 const Record = require('../record')
+const data = require('../data/rawData')
 const mongoose = require('mongoose')
 
 mongoose.connect('mongodb://localhost/expense-tracker', { useNewUrlParser: true, useUnifiedTopology: true })
 const db = mongoose.connection
 
+const records = data.records
+
 db.on('error', () => {
   console.log('mongodb error!')
 })
 db.once('open', () => {
-  console.log('mongodb connected!')
-  records.forEach(record => Record.create(record))
-  console.log('Complete!')
+  console.log('Mongodb connected!')
+  Record.create(records)
+    .then(() => {
+      console.log('Record data inserting completed.')
+      return db.close()
+    })
+    .then(() => {
+      console.log('Close connection successfully.')
+    })
 })
-
-// pass: there exists execution problem when use `npm run seed`
