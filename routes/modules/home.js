@@ -22,6 +22,8 @@ router.get('/index', (req, res) => {
   promises.push(Record.find(condition).lean().exec())
 
   Promise.all(promises).then(results => {
+
+
     const categories = results[0]
     const records = results[1]
 
@@ -29,8 +31,10 @@ router.get('/index', (req, res) => {
       element.date = tools.date2String(element.date)
       element.icon = categories.find(c => c.code === element.category).icon // join category.icon to record
     })
-    // console.log(records[0].date.getMonth())
-    return res.render('index', { categories, records })
+
+    const totalAmount = (records.length === 0) ? 0 : Number(tools.getTotalAmount(records))
+
+    return res.render('index', { categories, records, totalAmount })
   }).catch(err => {
     console.log(err)
   })

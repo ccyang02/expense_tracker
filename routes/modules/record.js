@@ -6,7 +6,8 @@ const tools = require('../../public/javascripts/main')
 
 router.get('/new', (req, res) => {
   // render to new.html
-  const unsavedData = req.query
+  const unsavedData = (Object.keys(req.query).length === 0) ? null : req.query
+
   Category
     .find()
     .sort({ '_id': 'asc' })
@@ -21,8 +22,8 @@ router.post('/new', (req, res) => {
   // render to index.html
   let data = {}
   data = Object.assign(data, req.body) // name, date, category, amount
-  const tokens = data.date.split('/')
-  data.date = Date(tokens[0], tokens[1], tokens[2])
+  const tokens = data.date.split('-')
+  data.date = new Date(tokens[0], tokens[1], tokens[2])
   data.amount = Number(data.amount)
 
   Record.create(data, function (error) {
@@ -59,8 +60,7 @@ router.put('/edit/:rid', (req, res) => {
   const rid = req.params.rid
   let newData = {}
   newData = Object.assign(newData, req.body) // name, date, category, amount
-  const tokens = newData.date.split('/')
-  newData.date = Date(tokens[0], tokens[1], tokens[2])
+  newData.date = tools.transformDateType(newData)
   newData.amount = Number(newData.amount)
 
   return Record.findById(rid)
