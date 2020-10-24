@@ -1,0 +1,22 @@
+body {
+  background-color: rgb(250, 250, 250);
+  font-family: "Microsoft JhengHei";
+}
+
+.total-amount {
+  color: rgb(226, 98, 24);
+  font-size: 4rem;
+}
+
+.index-dropdown {
+  width: 100%;
+}
+
+.dropdown-menu {
+  width: 100%;
+}
+
+.index-icon {
+  max-width: 1.8em; 
+  min-width: 1.5em
+}

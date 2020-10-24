@@ -10,6 +10,7 @@ const routes = require('./routes')
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 app.use(methodOverride('_method'))
+app.use(express.static('public'))
 app.use(routes)
 app.use(bodyParser.urlencoded({ extended: true }))
 

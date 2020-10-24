@@ -1,25 +1,61 @@
-<div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-    aria-haspopup="true" aria-expanded="false">
-    類別
-  </button>
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    {{#each categories}}
-    <a class="dropdown-item" href="/index?category={{this.code}}">{{this.name}}</a>
-    {{/each}}
+<div class="container mt-5" style="max-width: 720px;">
+  <div class="row justify-content-center">
+    <div class="col-6 my-2 mb-3">
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle index-dropdown" type="button" data-toggle="dropdown">
+          類別
+        </button>
+        <div class="dropdown-menu">
+          {{#each categories}}
+          <a class="dropdown-item" href="/index?category={{this.code}}">{{this.name}}</a>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-6">
+      <div class="d-flex justify-content-between">
+        <div>總金額：</div>
+        <div class="total-amount flex-grow-1 text-center">10000</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="offset-3 col-9">
+      {{#each records}}
+      <div class="row my-2">
+        <div class="col-6">
+          <div class="d-flex align-items-center">
+            <div class="index-icon text-right"><i class="{{this.icon}} fa-lg"></i></div>
+            <div class="ml-2">
+              <div class="d-flex flex-column">
+                <div>{{this.name}}</div>
+                <div style="font-size: 0.5rem;">{{this.date}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-2 align-self-center text-right">
+          {{this.amount}}
+        </div>
+
+        <div class="col-4 align-self-center">
+          <a href="/record/edit/{{this._id}}" class="btn btn-sm btn-outline-success">修改</a>
+          <form action="/record/delete/{{this._id}}?_method=DELETE" method="post" style="display: inline;">
+            <button class="btn btn-sm btn-outline-danger" type="submit">刪除</button>
+          </form>
+        </div>
+      </div>
+      {{/each}}
+
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-6 my-4 text-center">
+      <a href="/record/new" class="btn btn-primary">新增支出</a>
+    </div>
   </div>
 </div>
-
-{{#each records}}
-<i class="{{this.icon}}"></i>
-{{this.name}}
-{{this.date}}
-{{this.amount}}
-<a href="/record/edit/{{this._id}}" class="btn btn-primary">修改</a>
-<form action="/record/delete/{{this._id}}?_method=DELETE" method="post">
-  <button class="btn btn-primary" type="submit">刪除</button>
-</form>
-
-{{/each}}
-
-<a href="/record/new" class="btn btn-primary">新增支出</a>

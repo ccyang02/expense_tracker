@@ -3,6 +3,8 @@ const router = express.Router()
 const bodyParser = require('body-parser')
 const Record = require('../../models/record.js')
 const Category = require('../../models/category.js')
+const tools = require('../../public/javascripts/main')
+const record = require('../../models/record.js')
 
 router.use(bodyParser.urlencoded({ extended: true }))
 
@@ -13,7 +15,7 @@ router.get('/', (req, res) => {
 router.get('/index', (req, res) => {
   const queryCate = req.query.category
   const promises = []
-
+  tools.hello('Jewel')
   let condition = (queryCate) ? { category: queryCate } : {}
 
   promises.push(Category.find().sort({ '_id': 'asc' }).lean().exec())
@@ -22,11 +24,17 @@ router.get('/index', (req, res) => {
   Promise.all(promises).then(results => {
     const categories = results[0]
     const records = results[1]
+
+    records.forEach(element => {
+      element.date = tools.date2String(element.date)
+      element.icon = categories.find(c => c.code === element.category).icon // join category.icon to record
+    })
     // console.log(records[0].date.getMonth())
     return res.render('index', { categories, records })
   }).catch(err => {
     console.log(err)
   })
+
 })
 
 module.exports = router
