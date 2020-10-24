@@ -1,12 +1,14 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
 const session = require('express-session')
-const mongoose = require('mongoose')
 const methodOverride = require('method-override')
 const bodyParser = require('body-parser')
-const app = express()
-const port = 3000
 const routes = require('./routes')
+
+const app = express()
+const PORT = process.env.PORT || 3000
+
+require('./config/mongoose')
 
 app.engine('handlebars', exphbs({
   defaultLayout: 'main',
@@ -19,16 +21,7 @@ app.use(routes)
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: true }))
 
-mongoose.connect('mongodb://localhost/expense-tracker', { useNewUrlParser: true, useUnifiedTopology: true })
-const db = mongoose.connection
 
-db.on('error', () => {
-  console.log('mongodb error!')
-})
-db.once('open', () => {
-  console.log('mongodb connected!')
-})
-
-app.listen(port, () => {
-  console.log(`Server is listening on port ${port}.`)
+app.listen(PORT, () => {
+  console.log(`Server is listening on port ${PORT}.`)
 })
