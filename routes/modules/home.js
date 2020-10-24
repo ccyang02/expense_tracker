@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const bodyParser = require('body-parser')
-const tools = require('../../public/javascripts/main')
+const tools = require('../../utils/tools')
 
 router.use(bodyParser.urlencoded({ extended: true }))
 router.use(express.static('public'))

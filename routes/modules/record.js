@@ -1,6 +1,6 @@
 const express = require('express')
 const session = require('express-session')
-const tools = require('../../public/javascripts/main')
+const tools = require('../../utils/tools')
 const router = express.Router()
 
 const Category = require('../../models/category.js')
