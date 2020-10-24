@@ -4,9 +4,9 @@ const bodyParser = require('body-parser')
 const Record = require('../../models/record.js')
 const Category = require('../../models/category.js')
 const tools = require('../../public/javascripts/main')
-const record = require('../../models/record.js')
 
 router.use(bodyParser.urlencoded({ extended: true }))
+router.use(express.static('public'))
 
 router.get('/', (req, res) => {
   return res.redirect('/index')
@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
 router.get('/index', (req, res) => {
   const queryCate = req.query.category
   const promises = []
-  tools.hello('Jewel')
+
   let condition = (queryCate) ? { category: queryCate } : {}
 
   promises.push(Category.find().sort({ '_id': 'asc' }).lean().exec())

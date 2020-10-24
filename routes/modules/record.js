@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const Category = require('../../models/category.js')
 const Record = require('../../models/record.js')
-
+const tools = require('../../public/javascripts/main')
 
 router.get('/new', (req, res) => {
   // render to new.html
@@ -47,6 +47,7 @@ router.get('/edit/:rid', (req, res) => {
         .find({ _id: rid })
         .lean()
         .then(output => {
+          output.forEach(element => element.date = tools.date2String(element.date))
           return res.render('edit', { data: output[0], categories })
         })
     })

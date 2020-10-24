@@ -1,32 +1,43 @@
 <form action="/record/new" method="post">
-
-  <div class="input-group mb-3">
-    <div class="input-group-prepend">
-      <span class="input-group-text">名稱</span>
+  <div class="container mt-5 px-5 py-3 input-container" style="max-width: 500px; ">
+    <div class="row my-3">
+      <div class="col-12 font-weight-bold text-center" style="font-size: 1.5rem;">請輸入你的支出</div>
     </div>
-    <input type="text" name="name" value="{{#if unsavedData}} {{unsavedData.name}} {{/if}}" class="form-control">
-  </div>
-
-  <div class="input-group mb-3">
-    <div class="input-group-prepend">
-      <span class="input-group-text">日期</span>
+    <hr />
+    <div class="row my-3 mt-4">
+      <div class="col-3 align-self-center text-right">名稱*：</div>
+      <div class="col-8">
+        <input type="text" name="name" placeholder="開銷名稱" value="{{#if unsavedData}}{{unsavedData.name}}{{/if}}"
+          class="form-control">
+      </div>
     </div>
-    <input type="text" name="date" value="{{#if unsavedData}} {{unsavedData.date}} {{/if}}" class="form-control">
-  </div>
-
-  <select class="dropdown" name="category" value="{{#if unsavedData}} {{unsavedData.category}} {{/if}}">
-    {{#each categories}}
-    <option value="this.code">{{this.name}}</option>
-    {{/each}}
-  </select>
-
-  <div class="input-group mb-3">
-    <div class="input-group-prepend">
-      <span class="input-group-text">$</span>
-      <span class="input-group-text">0.00</span>
+    <div class="row my-2">
+      <div class="col-3 align-self-center text-right">日期*：</div>
+      <div class="col-8">
+        <input type="text" name="date" placeholder="YYYY/MM/DD" value="{{#if unsavedData}}{{unsavedData.date}}{{/if}}"
+          class="form-control">
+      </div>
     </div>
-    <input type="text" name="amount" value="{{#if unsavedData}} {{unsavedData.amount}} {{/if}}" class="form-control">
-  </div>
+    <div class="row my-2">
+      <div class="col-3 align-self-center text-right">類別*：</div>
+      <div class="col-8 my-2">
+        <select class="form-control" class="dropdown btn brn-primary" name="category"
+          value="{{#if unsavedData}}{{unsavedData.category}}{{/if}}">
+          {{#each categories}}
+          <option value="{{this.code}}">{{this.name}}</option>
+          {{/each}}
+        </select>
+      </div>
+    </div>
+    <div class="row my-2">
+      <div class="col-3 align-self-center text-right">金額*：</div>
+      <div class="col-8">
+        <input type="text" name="amount" value="{{#if unsavedData}}{{unsavedData.amount}}{{/if}}" class="form-control">
+      </div>
+    </div>
 
-  <button type="submit" class="btn btn-primary">送出</button>
+    <div class="row my-2 mt-5 justify-content-center">
+      <button type="submit" class="btn btn-primary">送出</button>
+    </div>
+  </div>
 </form>
