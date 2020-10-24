@@ -2,7 +2,15 @@
 
 My dad's mad money.  m(@^___^@)m
 
+![index](./public/images/index.png)
+
 ### Users could...
+
+- Add expense record.
+- Delete expense record.
+- Edit expense record.
+- Filter records by categories.
+- Watch total amount.
 
 ### Getting Started
 
@@ -26,4 +34,7 @@ npm install
 - Node.js: 10.16.0
 - express: 4.17.1
 - express-handlebars: 5.1.0
+- express-session: 1.17.1
+- method-override: 3.0.0
 - mongoDB: 2.1.0
+- mongoose: 5.10.9
