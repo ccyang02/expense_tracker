@@ -6,17 +6,18 @@ module.exports = app => {
   app.use(passport.initialize())
   app.use(passport.session())
 
-  passport.use(new LocalPassport({ usernameField: 'email' }, (email, passport, done) => {
+  passport.use(new LocalPassport({ usernameField: 'email' }, (email, password, done) => {
     User.findOne({ email })
       .then(user => {
         if (!user) {
           return done(null, false, { message: 'This email is not registered!' })
         }
-        if (user.passport !== passport) {
+        if (user.password !== password) {
           return done(null, false, { message: 'Password is incorrect!' })
         }
-        return done(error => done(error, false))
+        return done(null, user)
       })
+      .catch(err => done(err, false))
   }))
 
   passport.serializeUser((user, done) => {
