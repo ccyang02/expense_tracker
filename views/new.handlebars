@@ -3,7 +3,8 @@
     <div class="row my-3">
       <div class="col-12 font-weight-bold text-center" style="font-size: 1.5rem;">請輸入你的支出</div>
     </div>
-    {{#if unsavedData}}
+    {{> message}}
+    {{!-- {{#if unsavedData}}
     <div class="row my-1">
       <div class="alert alert-danger alert-dismissible fade show" role="alert" style="width: 100%;">
         <strong>Error!</strong> 請確認所有空格都已輸入並符合要求！
@@ -12,27 +13,24 @@
         </button>
       </div>
     </div>
-    {{/if}}
+    {{/if}} --}}
     <hr />
     <div class="row my-3 mt-4">
       <div class="col-3 align-self-center text-right">*名稱：</div>
       <div class="col-8">
-        <input type="text" name="name" placeholder="開銷名稱" value="{{#if unsavedData}}{{unsavedData.name}}{{/if}}"
-          class="form-control">
+        <input type="text" name="name" placeholder="開銷名稱" value="{{name}}" class="form-control" required>
       </div>
     </div>
     <div class="row my-2">
       <div class="col-3 align-self-center text-right">*日期：</div>
       <div class="col-8">
-        <input type="date" name="date" placeholder="YYYY/MM/DD" value="{{#if unsavedData}}{{unsavedData.date}}{{/if}}"
-          class="form-control">
+        <input type="date" name="date" placeholder="YYYY/MM/DD" value="{{date}}" class="form-control" required>
       </div>
     </div>
     <div class="row my-2">
       <div class="col-3 align-self-center text-right">*類別：</div>
       <div class="col-8 my-2">
-        <select class="form-control" class="dropdown btn brn-primary" name="category"
-          value="{{#if unsavedData}}{{unsavedData.category}}{{/if}}">
+        <select class="form-control" class="dropdown btn brn-primary" id="category" name="category">
           {{#each categories}}
           <option value="{{this.code}}">{{this.name}}</option>
           {{/each}}
@@ -42,15 +40,13 @@
     <div class="row my-2">
       <div class="col-3 align-self-center text-right">商家：</div>
       <div class="col-8 mb-2">
-        <input type="text" name="merchant" value="{{#if unsavedData}}{{unsavedData.merchant}}{{/if}}"
-          class="form-control">
+        <input type="text" name="merchant" value="{{merchant}}" class="form-control">
       </div>
     </div>
     <div class="row my-2">
       <div class="col-3 align-self-center text-right">*金額：</div>
       <div class="col-8">
-        <input type="number" name="amount" placeholder="金額不得小於等於零"
-          value="{{#if unsavedData}}{{unsavedData.amount}}{{/if}}" class="form-control">
+        <input type="number" name="amount" placeholder="金額不得小於等於零" value="{{amount}}" class="form-control" required>
       </div>
     </div>
 

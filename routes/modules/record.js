@@ -1,45 +1,66 @@
 const express = require('express')
-const session = require('express-session')
 const tools = require('../../utils/tools')
 const router = express.Router()
+const { check, validationResult } = require('express-validator')
 
 const Category = require('../../models/category.js')
 const Record = require('../../models/record.js')
 
-// router.use(session({ secret: 'secret', resave: false, saveUninitialized: true }))
-
 router.get('/new', (req, res) => {
   // render to new.html
-  const unsavedData = req.session.middleData
   Category
     .find()
     .sort({ '_id': 'asc' })
     .lean()
-    .then(categories => res.render('new', { categories, unsavedData }))
+    .then(categories => {
+      return res.render('new', { categories })
+    })
     .catch(error => {
       console.log(error)
       return res.end()
     })
 })
 
-router.post('/new', (req, res) => {
+router.post('/new', [
+  check('amount').custom(value => {
+    if (Number(value) < 0) {
+      throw new Error('金額不可為負數。')
+    }
+    return true
+  })
+], (req, res) => {
   // render to index.html
-  let data = {}
-  const userId = req.user._id
-  data = Object.assign(data, req.body) // name, date, category, amount
-  data.date = tools.transformDateType(data)
-  data.userId = userId
+  const errorResults = validationResult(req)
+  if (!errorResults.isEmpty()) {
+    Category.find()
+      .lean()
+      .then(categories => {
+        const errors = errorResults.errors.map(error => error.msg)
+        req.body.categories = categories
+        req.body.errors = errors
+        return res.render('new', req.body)
+      })
+      .catch(error => {
+        console.log(error)
+        return res.end()
+      })
+  } else {
+    let data = {}
+    const userId = req.user._id
+    data = Object.assign(data, req.body) // name, date, category, amount
+    data.date = tools.transformDateType(data)
+    data.userId = userId
 
-  Record.create(data)
-    .then(() => {
-      req.session.middleData = undefined
-      return res.redirect('/')
-    })
-    .catch(error => {
-      console.log(error)
-      req.session.middleData = req.body
-      return res.redirect(`/record/new`) // 可以考慮改成直接 render
-    })
+    Record.create(data)
+      .then(() => {
+        req.session.middleData = undefined
+        return res.redirect('/')
+      })
+      .catch(error => {
+        console.log(error)
+        return res.end()
+      })
+  }
 })
 
 router.get('/edit/:rid', (req, res) => {
@@ -65,7 +86,19 @@ router.get('/edit/:rid', (req, res) => {
     })
 })
 
-router.put('/edit/:rid', (req, res) => {
+router.put('/edit/:rid', [
+  check('amount').custom(value => {
+    if (Number(value) < 0) {
+      throw new Error('金額不可為負數。')
+    }
+    return true
+  })
+], (req, res) => {
+  const errorResults = validationResult(req)
+  if (!errorResults.isEmpty()) {
+    return res.redirect(`/record/edit/${rid}?isFail=true`)
+  }
+
   // render to edit.html
   const rid = req.params.rid
   const userId = req.user._id

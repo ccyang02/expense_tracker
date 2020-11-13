@@ -3,30 +3,18 @@
     <div class="row my-3">
       <div class="col-12 font-weight-bold text-center" style="font-size: 1.5rem;">請修改你的支出</div>
     </div>
-    {{#if isFail}}
-    <div class="row my-1">
-      <div
-        class="alert {{#if (isEqual isFail "true")}}alert-danger{{/if}} {{#if (isEqual isFail "false")}}alert-success{{/if}} alert-dismissible fade show"
-        role="alert" style="width: 100%;">
-        {{#if (isEqual isFail "true")}}<strong>Error: </strong>請確認修改的空格都已確實填入！且金額不得小於等於零。{{/if}}
-        {{#if (isEqual isFail "false")}}修改成功{{/if}}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-    </div>
-    {{/if}}
+    {{> message}}
     <hr />
     <div class="row my-3 mt-4">
       <div class="col-3 align-self-center text-right">*名稱：</div>
       <div class="col-8">
-        <input type="text" name="name" placeholder="開銷名稱" value="{{data.name}}" class="form-control">
+        <input type="text" name="name" placeholder="開銷名稱" value="{{data.name}}" class="form-control" required>
       </div>
     </div>
     <div class="row my-2">
       <div class="col-3 align-self-center text-right">*日期：</div>
       <div class="col-8">
-        <input type="date" name="date" placeholder="YYYY/MM/DD" value="{{data.date}}" class="form-control">
+        <input type="date" name="date" placeholder="YYYY/MM/DD" value="{{data.date}}" class="form-control" required>
       </div>
     </div>
     <div class="row my-2">
@@ -48,7 +36,7 @@
     <div class="row my-2">
       <div class="col-3 align-self-center text-right">*金額：</div>
       <div class="col-8">
-        <input type="text" name="amount" value="{{data.amount}}" class="form-control">
+        <input type="text" name="amount" value="{{data.amount}}" class="form-control" required>
       </div>
     </div>
 

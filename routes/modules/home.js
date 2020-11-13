@@ -19,10 +19,10 @@ router.get('/index', (req, res) => {
   const userId = req.user._id
 
   // if users filter data by category
-  let condition = (queryCate) ? { category: queryCate } : {}
+  let condition = (queryCate) ? { category: queryCate, userId } : { userId }
 
   promises.push(Category.find().sort({ '_id': 'asc' }).lean().exec())
-  promises.push(Record.find(condition).find({ userId }).lean().exec())
+  promises.push(Record.find(condition).lean().exec())
 
   Promise.all(promises).then(results => {
     const categories = results[0]

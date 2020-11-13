@@ -5,6 +5,7 @@ module.exports = {
       return next()
     } else {
       console.log('@auth fail')
+      req.flash('warning_msg', '請先登入才能使用！')
       return res.redirect('/user/login')
     }
   }
