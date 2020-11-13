@@ -19,6 +19,19 @@ const recordSchema = new Schema({
     min: [0, 'Cannot be zero or negative.'],
     required: true
   },
+  merchant: {
+    type: String,
+  },
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    index: true,
+    required: true
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
 })
 
 module.exports = mongoose.model('Record', recordSchema)

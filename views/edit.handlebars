@@ -18,19 +18,19 @@
     {{/if}}
     <hr />
     <div class="row my-3 mt-4">
-      <div class="col-3 align-self-center text-right">名稱*：</div>
+      <div class="col-3 align-self-center text-right">*名稱：</div>
       <div class="col-8">
         <input type="text" name="name" placeholder="開銷名稱" value="{{data.name}}" class="form-control">
       </div>
     </div>
     <div class="row my-2">
-      <div class="col-3 align-self-center text-right">日期*：</div>
+      <div class="col-3 align-self-center text-right">*日期：</div>
       <div class="col-8">
         <input type="date" name="date" placeholder="YYYY/MM/DD" value="{{data.date}}" class="form-control">
       </div>
     </div>
     <div class="row my-2">
-      <div class="col-3 align-self-center text-right">類別*：</div>
+      <div class="col-3 align-self-center text-right">*類別：</div>
       <div class="col-8 my-2">
         <select class="form-control" class="dropdown btn brn-primary" name="category" value="{{data.category}}">
           {{#each categories}}
@@ -40,7 +40,13 @@
       </div>
     </div>
     <div class="row my-2">
-      <div class="col-3 align-self-center text-right">金額*：</div>
+      <div class="col-3 align-self-center text-right">商家：</div>
+      <div class="col-8 mb-2">
+        <input type="text" name="merchant" value="{{data.merchant}}" class="form-control">
+      </div>
+    </div>
+    <div class="row my-2">
+      <div class="col-3 align-self-center text-right">*金額：</div>
       <div class="col-8">
         <input type="text" name="amount" value="{{data.amount}}" class="form-control">
       </div>

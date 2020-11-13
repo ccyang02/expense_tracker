@@ -16,12 +16,13 @@ router.get('/', (req, res) => {
 router.get('/index', (req, res) => {
   const queryCate = req.query.category
   const promises = []
+  const userId = req.user._id
 
   // if users filter data by category
   let condition = (queryCate) ? { category: queryCate } : {}
 
   promises.push(Category.find().sort({ '_id': 'asc' }).lean().exec())
-  promises.push(Record.find(condition).lean().exec())
+  promises.push(Record.find(condition).find({ userId }).lean().exec())
 
   Promise.all(promises).then(results => {
     const categories = results[0]
@@ -35,7 +36,10 @@ router.get('/index', (req, res) => {
 
     const totalAmount = (records.length === 0) ? 0 : Number(tools.getTotalAmount(records))
     return res.render('index', { categories, records, totalAmount })
-  }).catch(err => console.log(err))
+  }).catch(err => {
+    console.log(err)
+    return res.end()
+  })
 })
 
 module.exports = router

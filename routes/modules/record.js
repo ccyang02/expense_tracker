@@ -6,7 +6,7 @@ const router = express.Router()
 const Category = require('../../models/category.js')
 const Record = require('../../models/record.js')
 
-router.use(session({ secret: 'secret', resave: false, saveUninitialized: true }))
+// router.use(session({ secret: 'secret', resave: false, saveUninitialized: true }))
 
 router.get('/new', (req, res) => {
   // render to new.html
@@ -16,73 +16,88 @@ router.get('/new', (req, res) => {
     .sort({ '_id': 'asc' })
     .lean()
     .then(categories => res.render('new', { categories, unsavedData }))
-    .catch(error => console.log(error))
+    .catch(error => {
+      console.log(error)
+      return res.end()
+    })
 })
 
 router.post('/new', (req, res) => {
   // render to index.html
   let data = {}
+  const userId = req.user._id
   data = Object.assign(data, req.body) // name, date, category, amount
   data.date = tools.transformDateType(data)
+  data.userId = userId
 
-  Record.create(data, function (error) {
-    if (error) {
-      req.session.middleData = req.body
-      return res.redirect(`/record/new`)
-    } else {
+  Record.create(data)
+    .then(() => {
       req.session.middleData = undefined
       return res.redirect('/')
-    }
-  })
+    })
+    .catch(error => {
+      console.log(error)
+      req.session.middleData = req.body
+      return res.redirect(`/record/new`) // 可以考慮改成直接 render
+    })
 })
 
 router.get('/edit/:rid', (req, res) => {
   // render to edit.html
   const rid = req.params.rid
   const isFail = req.query.isFail
+  const userId = req.user._id
   Category
     .find()
     .lean()
     .then(categories => {
       Record
-        .find({ _id: rid })
+        .findOne({ _id: rid, userId })
         .lean()
         .then(output => {
-          output.forEach(element => element.date = tools.date2String(element.date))
-          return res.render('edit', { data: output[0], categories, isFail })
+          output.date = tools.date2String(output.date)
+          return res.render('edit', { data: output, categories, isFail })
         })
     })
-    .catch(error => console.log(error))
+    .catch(error => {
+      console.log(error)
+      return res.end()
+    })
 })
 
 router.put('/edit/:rid', (req, res) => {
   // render to edit.html
   const rid = req.params.rid
+  const userId = req.user._id
   let newData = {}
-  newData = Object.assign(newData, req.body) // name, date, category, amount
+  newData = Object.assign(newData, req.body) // name, date, category, amount, merchant
   newData.date = tools.transformDateType(newData)
 
-  return Record.findById(rid)
+  return Record.findOne({ _id: rid, userId })
     .then(record => {
       Object.assign(record, newData)
       return record.save()
     })
     .then(() => {
-      res.redirect(`/record/edit/${rid}?isFail=false`)
+      return res.redirect(`/record/edit/${rid}?isFail=false`)
     })
     .catch(error => {
-      res.redirect(`/record/edit/${rid}?isFail=true`)
       console.log(error)
+      return res.redirect(`/record/edit/${rid}?isFail=true`)
     })
 })
 
 router.delete('/delete/:rid', (req, res) => {
   // render to index.html
   const rid = req.params.rid
-  Record.findById(rid)
+  const userId = req.user._id
+  Record.findOne({ _id: rid, userId })
     .then(output => { output.remove() })
     .then(() => res.redirect('/'))
-    .catch(error => console.log(error))
+    .catch(error => {
+      console.log(error)
+      return res.end()
+    })
 })
 
 
