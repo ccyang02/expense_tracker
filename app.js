@@ -7,6 +7,10 @@ const bodyParser = require('body-parser')
 const flash = require('connect-flash')
 const routes = require('./routes')
 
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+
 const app = express()
 const PORT = process.env.PORT || 3000
 
