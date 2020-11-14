@@ -25,7 +25,7 @@ app.use(methodOverride('_method'))
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(session({
-  secret: 'UncleRogerIsAFunnyYoutuberHiya',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true
 }))

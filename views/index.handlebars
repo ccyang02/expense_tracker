@@ -1,14 +1,25 @@
 <div class="container input-container mt-5" style="max-width: 720px;">
   <div class="row justify-content-center">
     <div class="col-6 my-2 mb-3">
-      <div class="dropdown">
+      <div class="dropdown dropdown-filter">
         <button class="btn btn-secondary dropdown-toggle index-dropdown" type="button" data-toggle="dropdown">
           類別
         </button>
         <div class="dropdown-menu">
           {{#each categories}}
-          <a class="dropdown-item" href="/index?category={{this.code}}">{{this.name}}</a>
+          <a class="dropdown-item category-item"
+            href="/index?queryCate={{this.code}}&queryTimestamp={{../queryTimestamp}}"><i
+              class="{{this.icon}} fa-sm mr-2"></i>{{this.name}}</a>
           {{/each}}
+        </div>
+      </div>
+
+      <div class="dropdown dropdown-filter mt-2">
+        <button class="btn btn-secondary dropdown-toggle index-dropdown" type="button" data-toggle="dropdown">
+          年月
+        </button>
+        <div class="dropdown-menu dropdown-time" style="height: 200px; overflow:auto">
+          <a class="sample-time-query" href="/index?queryCate={{queryCate}}" style="visibility: hidden"></a>2020-11
         </div>
       </div>
     </div>
@@ -36,7 +47,7 @@
                 <div>{{this.name}}<span class="pl-1"><small
                       style="color:cornflowerblue">{{this.merchant}}</small></span>
                 </div>
-                <div style="font-size: 0.5rem;">{{this.date}}</div>
+                <div class="unix-timestamp" style="font-size: 0.5rem;">{{this.date}}</div>
               </div>
             </div>
           </div>

@@ -14,28 +14,49 @@ router.get('/', (req, res) => {
 })
 
 router.get('/index', (req, res) => {
-  const queryCate = req.query.category
+  const queryCate = req.query.queryCate
+  const queryTimestamp = req.query.queryTimestamp
   const promises = []
   const userId = req.user._id
 
-  // if users filter data by category
-  let condition = (queryCate) ? { category: queryCate, userId } : { userId }
+  let queryArr = [{ userId }]
+
+  if (queryCate) {
+    const cateCondition = [
+      { category: queryCate }
+    ]
+    queryArr = [...queryArr, ...cateCondition]
+  }
+
+  if (queryTimestamp) {
+    const startTimestamp = Number(queryTimestamp.slice(0, 13))
+    const endTimestamp = Number(queryTimestamp.slice(13, 26))
+
+    const timeCondition = [
+      { date: { $gte: new Date(startTimestamp) } },
+      { date: { $lt: new Date(endTimestamp) } },
+    ]
+    queryArr = [...queryArr, ...timeCondition]
+  }
+
+  const query = {
+    $and: queryArr
+  }
 
   promises.push(Category.find().sort({ '_id': 'asc' }).lean().exec())
-  promises.push(Record.find(condition).lean().exec())
+  promises.push(Record.find(query).lean().exec())
 
   Promise.all(promises).then(results => {
     const categories = results[0]
     const records = results[1]
 
     records.forEach(element => {
-      element.date = tools.date2String(element.date)
+      element.date = element.date.getTime()
       // join category.icon to record
       element.icon = categories.find(c => c.code === element.category).icon
     })
-
     const totalAmount = (records.length === 0) ? 0 : Number(tools.getTotalAmount(records))
-    return res.render('index', { categories, records, totalAmount })
+    return res.render('index', { categories, records, totalAmount, queryCate, queryTimestamp })
   }).catch(err => {
     console.log(err)
     return res.end()
