@@ -1,5 +1,6 @@
 const express = require('express')
 const passport = require('passport')
+const bcrypt = require('bcryptjs')
 const router = express.Router()
 const User = require('../../models/user')
 const { check, validationResult } = require('express-validator')
@@ -38,14 +39,31 @@ router.post('/register', [
 
   const validatedInfo = { email: req.body.email, password: req.body.password }
   if (req.body.name) validatedInfo.name = req.body.name
-  User.create(validatedInfo)
-    .then(() => {
-      return res.redirect('/')
+  User.findOne({ email: validatedInfo.email })
+    .then(user => {
+      if (user) {
+        req.body.errors = ['這個 email 已經被註冊過了！']
+        return res.render('register', req.body)
+      }
+      return bcrypt
+        .genSalt(10)
+        .then(salt => bcrypt.hash(validatedInfo.password, salt))
+        .then(hash => {
+          validatedInfo.password = hash
+          User.create(validatedInfo)
+            .then(() => {
+              return res.redirect('/')
+            })
+            .catch(error => {
+              console.log(error)
+              return res.end()
+            })
+        })
+
+
     })
-    .catch(error => {
-      console.log(error)
-      return res.end()
-    })
+
+
 })
 
 router.get('/logout', (req, res) => {
