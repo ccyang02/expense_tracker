@@ -13,8 +13,6 @@ try {
 
   const yearsInterval = Array.from({ length: getHowManyYears }, (_, k) => k + nowTimestamp.getFullYear() - (getHowManyYears - 1))
   const monthInterval = Array.from({ length: 12 }, (_, k) => k + 1)
-  const dayInterval = [-1, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-  const dayIntervalSpecial = [-1, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
   let timeOptions = ``
 
@@ -56,6 +54,8 @@ function date2String(unixTimestampString) {
 }
 
 function getTimeInterval(year, month) {
+  const dayInterval = [-1, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+  const dayIntervalSpecial = [-1, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
   startTime = new Date(year, month, 1)
   if (year % 4 !== 0) {
     endTime = new Date(year, month, dayInterval[month])
