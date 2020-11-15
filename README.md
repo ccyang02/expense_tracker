@@ -2,14 +2,14 @@
 
 My dad's mad money.  m(@^___^@)m
 
-![index](./public/images/index.png)
+![index](./public/images/pages.png)
 
 ### Users could...
 
 - Add expense record.
 - Delete expense record.
 - Edit expense record.
-- Filter records by categories.
+- Filter records by categories & date.
 - Watch total amount.
 
 ### Getting Started
