@@ -1,1 +1,1 @@
-web: node models/seeds/categorySeeder.js && node models/seeds/recordSeeder.js && node app.js
+web: node models/seeds/userSeeder.js && node models/seeds/categorySeeder.js && node models/seeds/recordSeeder.js && node app.js
