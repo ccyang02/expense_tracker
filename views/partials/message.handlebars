@@ -7,16 +7,17 @@
 </div>
 {{/if}}
 {{#if warning_msg}}
-<div class="alert alert-warning alert-dismissible fade show" role="alert">
+<div class="alert alert-warning alert-dismissible fade show text-center m-5" role="alert">
   {{{warning_msg}}}
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
 {{/if}}
+
 {{#if login_warning_msg}}
-<div class="alert alert-warning alert-dismissible fade show" role="alert">
-  {{{login_warning_msg}}}
+<div class="alert alert-warning alert-dismissible fade show text-center" role="alert">
+  {{login_warning_msg}}
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
