@@ -5,13 +5,12 @@ const Category = require('../category.js')
 const categories = data.categories
 
 db.once('open', () => {
-  console.log('Mongodb connected!')
-  Category.create(categories)
+  return Category.insertMany(categories, { ordered: false })
     .then(() => {
-      console.log('Category data inserting completed.')
-      return db.close()
+      console.log('Insert categories data successfully.')
+      process.exit()
     })
-    .then(() => {
-      console.log('Close connection successfully.')
+    .catch(error => {
+      process.exit()
     })
 })

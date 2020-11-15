@@ -28,15 +28,29 @@ const data = {
   ],
   records: [
     {
+      name: '購置沙發',
+      category: 'residence',
+      date: new Date(2020, 9, 30), // Oct 30, 2020
+      merchant: 'IKEA',
+      amount: 3500,
+    },
+    {
+      name: '加汽油',
+      category: 'transportation',
+      date: new Date(2020, 9, 30), // Oct 30, 2020
+      amount: 1111,
+    },
+    {
       name: '打牌輸錢',
       category: 'amusement',
-      date: new Date(2020, 10, 20),
+      date: new Date(2020, 10, 1), // Nov 1, 2020
       amount: 2000,
     },
     {
       name: '家人吃餐廳',
       category: 'food',
-      date: new Date(2020, 10, 21),
+      date: new Date(2020, 10, 2), // Nov 2, 2020
+      merchant: '慶豐平價牛排',
       amount: 666,
     }
   ]
