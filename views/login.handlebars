@@ -2,27 +2,32 @@
   <div class="left-background"></div>
   <div class="right-background">
     <form action="/user/login" method="post">
-      <div class="d-flex flex-column align-items-center">
-        <div class="p-2 user-title">Login</div>
+      <div class="d-flex flex-column align-items-center mt-5">
+        <div class="p-2 user-title text-style font-weight-bolder" style="font-size: 50px;">
+          Login</div>
         <div class="p-2 ">
-          <div class="form-group">
-            <label for="email">Email address</label>
-            <input type="email" name="email" class="form-control user-input-email user-input-shape" id="email">
+          <div class="form-group text-center text-style" style="width: 100%">
+            <label for="email" class="text-muted text-uppercase" style="font-size: 0.5rem;">Your
+              e-mail</label>
+            <input type="email" name="email" class="form-control user-input-email user-input-shape text-center"
+              id="email">
           </div>
         </div>
         <div class="p-2">
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" name="password" class="form-control user-input-password user-input-shape"
+          <div class="form-group text-center text-style" style="width: 100%">
+            <label for="password" class="text-muted text-uppercase" style="font-size: 0.5rem;">Password</label>
+            <input type="password" name="password" class="form-control user-input-password user-input-shape text-center"
               id="password">
           </div>
 
         </div>
         <div class="p-2">
-          <input class="btn btn-primary user-input-shape" type="submit" value="LOGIN">
-          <a href="/auth/facebook" class="btn btn-info btn-block">Facebook Login</a>
+          <input class="btn user-button-shape login-btn-shape text-style" type="submit" value="Login">
+          <a href="/auth/facebook" class="btn btn-primary btn-block user-button-shape text-style mt-2">Facebook
+            Login</a>
         </div>
-        <div class="p-2">Have no account? <a href="/user/register">Register</a></div>
+        <div class="p-2 text-muted" style="font-size: 0.5rem;">Don't have an account? <a href="/user/register">Sign
+            up</a></div>
       </div>
     </form>
     {{> message}}

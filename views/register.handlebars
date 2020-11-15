@@ -2,39 +2,43 @@
   <div class="left-background"></div>
   <div class="right-background">
     <form action="/user/register" method="post">
-      <div class="d-flex flex-column align-items-center">
-        <div class="p-2 user-title">Sign Up</div>
-        <div class="p-2 ">
-          <div class="form-group">
-            <label for="email">Email address</label>
-            <input type="email" class="form-control user-input-email user-input-shape" name="email" id="email" required>
+      <div class="d-flex flex-column align-items-center mt-4">
+        <div class="p-2 user-title text-style font-weight-bolder" style="font-size: 50px">Sign Up</div>
+        <div>
+          <div class="form-group text-center text-style" style="width: 100%">
+            <label for="email" class="text-muted text-uppercase" style="font-size: 0.5rem;">Email address</label>
+            <input type="email" class="form-control user-input-shape text-center user-register" name="email" id="email"
+              required>
           </div>
         </div>
-        <div class="p-2 ">
-          <div class="form-group">
-            <label for="name">Username</label>
-            <input type="name" class="form-control user-input-name user-input-shape" name="name" id="name">
+        <div>
+          <div class="form-group text-center text-style" style="width: 100%">
+            <label for="name" class="text-muted text-uppercase" style="font-size: 0.5rem;">Username</label>
+            <input type="name" class="form-control user-input-shape text-center user-register" name="name" id="name">
           </div>
         </div>
-        <div class="p-2">
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" class="form-control user-input-password user-input-shape" name="password"
+        <div>
+          <div class="form-group text-center text-style" style="width: 100%">
+            <label for="password" class="text-muted text-uppercase" style="font-size: 0.5rem;">Password</label>
+            <input type="password" class="form-control user-input-shape text-center user-register" name="password"
               id="password" minlength="4" maxlength="8" required>
           </div>
         </div>
-        <div class="p-2">
-          <div class="form-group">
-            <label for="confirmPassword">Confirm Password</label>
-            <input type="password" class="form-control user-input-confirmPassword user-input-shape"
+        <div>
+          <div class="form-group text-center text-style" style="width: 100%">
+            <label for="confirmPassword" class="text-muted text-uppercase" style="font-size: 0.5rem;">Confirm
+              Password</label>
+            <input type="password"
+              class="form-control user-input-confirmPassword user-input-shape text-center user-register"
               name="confirmPassword" id="confirmPassword" minlength="4" maxlength="8" required>
           </div>
         </div>
         <div class="p-2">
-          <input class="btn btn-primary user-input-shape" type="submit" value="SIGN UP">
-          <a href="/auth/facebook" class="btn btn-info btn-block">Register by Facebook</a>
+          <input class="btn user-button-shape register-btn-shape text-style" type="submit" value="Sign up">
+          <a href="/auth/facebook" class="btn btn-primary btn-block user-button-shape text-style mt-2">Register by
+            Facebook</a>
         </div>
-        <div class="p-2">Have an Account?<a href="/user/login">Login</a></div>
+        <div class="p-2 text-nuted" style="font-size: 0.5rem;">Have an Account? <a href="/user/login">Login</a></div>
       </div>
     </form>
     {{> message}}

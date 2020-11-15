@@ -1,7 +1,5 @@
 /* this is style sheet for user router */
 
-/* ref: https://css-tricks.com/left-and-right/ */
-
 .user-container {
   height: 100vh;
   width: 100%;
@@ -17,19 +15,70 @@
 .left-background {
   height: 100vh;
   width: 60%;
-  background-color: #ff9e2c;
+  /* background-color: #ff9e2c; */
+  background-image: url("/images/building_plan_hires.jpg");
+  background-position: center; 
+  background-repeat: no-repeat; 
+  background-size: cover;
+  opacity: 0.9;
 }
 
 .right-background {
   height: 100vh;
   width: 40%;
+  background-color: white;
   /* background-color: #b6701e; */
 }
 
 .user-input-shape {
   border-radius: 20px;
+  width: 270px;
+}
+
+.user-button-shape {
+  border-radius: 20px;
+  width: 220px;
+}
+
+.text-style {
+  /* font-family:Trebuchet MS, sans-serif;  */
+  font-family: DejaVu Sans Mono, monospace;
+}
+
+.form-control {
+  /* cover bootstrap */
+  border: 1px solid rgba(255, 0, 0, 0);
+}
+
+.user-input-email, .user-register{
+  background-color: rgb(239, 240, 244);
+}
+
+form .user-input-email:focus, form .user-register:focus{
+  /* cover bootstrap */
+  border: 1px solid rgba(255, 0, 0, 0);
+  background-color: rgb(239, 240, 244);
+  box-shadow: none;
 }
 
 .user-input-password {
-  /* background-color: grey; */
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 10px 14px;
+}
+
+form .user-input-password:focus{
+  /* cover bootstrap */
+  border: 1px solid rgba(255, 0, 0, 0);
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 10px 14px;
+}
+
+.login-btn-shape, .register-btn-shape {
+  color: white;
+  border-color:  rgb(255, 28, 29);
+  background-color: rgb(255, 28, 29);
+}
+
+.login-btn-shape:hover, .register-btn-shape:hover {
+  color: white;
+  border-color:  rgb(224, 0, 0);
+  background-color: rgb(224, 0, 0);
 }
