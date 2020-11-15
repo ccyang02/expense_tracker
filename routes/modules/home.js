@@ -19,29 +19,33 @@ router.get('/index', (req, res) => {
   const promises = []
   const userId = req.user._id
 
-  let queryArr = [{ userId }]
+  function getQuery(userId, queryCate, queryTimestamp) {
+    let queryArr = [{ userId }]
 
-  if (queryCate) {
-    const cateCondition = [
-      { category: queryCate }
-    ]
-    queryArr = [...queryArr, ...cateCondition]
+    if (queryCate) {
+      const cateCondition = [
+        { category: queryCate }
+      ]
+      queryArr = [...queryArr, ...cateCondition]
+    }
+
+    if (queryTimestamp) {
+      const startTimestamp = Number(queryTimestamp.slice(0, 13))
+      const endTimestamp = Number(queryTimestamp.slice(13, 26))
+
+      const timeCondition = [
+        { date: { $gte: new Date(startTimestamp) } },
+        { date: { $lt: new Date(endTimestamp) } },
+      ]
+      queryArr = [...queryArr, ...timeCondition]
+    }
+
+    return {
+      $and: queryArr
+    }
   }
 
-  if (queryTimestamp) {
-    const startTimestamp = Number(queryTimestamp.slice(0, 13))
-    const endTimestamp = Number(queryTimestamp.slice(13, 26))
-
-    const timeCondition = [
-      { date: { $gte: new Date(startTimestamp) } },
-      { date: { $lt: new Date(endTimestamp) } },
-    ]
-    queryArr = [...queryArr, ...timeCondition]
-  }
-
-  const query = {
-    $and: queryArr
-  }
+  const query = getQuery(userId, queryCate, queryTimestamp)
 
   promises.push(Category.find().sort({ '_id': 'asc' }).lean().exec())
   promises.push(Record.find(query).lean().exec())

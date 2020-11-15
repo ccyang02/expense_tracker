@@ -2,10 +2,11 @@
   <div class="row justify-content-center">
     <div class="col-6 my-2 mb-3">
       <div class="dropdown dropdown-filter">
-        <button class="btn btn-secondary dropdown-toggle index-dropdown" type="button" data-toggle="dropdown">
-          類別
+        <button class="btn btn-secondary dropdown-toggle index-dropdown dropdown-toggle-category" type="button"
+          data-toggle="dropdown">
+          類別{{#if queryCate}}：{{queryCate}}{{/if}}
         </button>
-        <div class="dropdown-menu">
+        <div class="dropdown-menu dropdown-menu-category">
           {{#each categories}}
           <a class="dropdown-item category-item"
             href="/index?queryCate={{this.code}}&queryTimestamp={{../queryTimestamp}}"><i
@@ -15,10 +16,11 @@
       </div>
 
       <div class="dropdown dropdown-filter mt-2">
-        <button class="btn btn-secondary dropdown-toggle index-dropdown" type="button" data-toggle="dropdown">
-          年月
+        <button class="btn btn-secondary dropdown-toggle index-dropdown dropdown-toggle-timestamp" type="button"
+          data-toggle="dropdown">
+          年月{{#if queryTimestamp}}：{{queryTimestamp}}{{/if}}
         </button>
-        <div class="dropdown-menu dropdown-time" style="height: 200px; overflow:auto">
+        <div class="dropdown-menu dropdown-menu-timestamp dropdown-time" style="height: 200px; overflow:auto">
           <a class="sample-time-query" href="/index?queryCate={{queryCate}}" style="visibility: hidden"></a>2020-11
         </div>
       </div>

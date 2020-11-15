@@ -28,6 +28,11 @@ try {
 
   const timeDropdown = document.querySelector('.dropdown-time')
   timeDropdown.innerHTML = timeOptions
+
+  // replace category name with category id
+  replaceFilterName('.dropdown-toggle-category', '.dropdown-menu-category')
+  replaceFilterName('.dropdown-toggle-timestamp', '.dropdown-menu-timestamp')
+
 } catch (error) {
   console.log('Not in index page')
 }
@@ -68,4 +73,17 @@ function getTimeInterval(year, month) {
 function getTimeString(year, month) {
   month = (month < 10) ? `0${month}` : `${month}`
   return year + '-' + month
+}
+
+function replaceFilterName(toggleClass, menuClass) {
+  const filterBar = document.querySelector(toggleClass)
+  if (filterBar.innerText.includes('：')) {
+    const menu = document.querySelector(menuClass)
+    const cate = filterBar.innerText.split('：')[1].trim()
+    let outcome = undefined
+    for (child of menu.children) {
+      if (child.href.includes(cate)) outcome = child.innerText
+    }
+    filterBar.innerText = filterBar.innerText.replace(cate, outcome)
+  }
 }
