@@ -1,5 +1,4 @@
 const express = require('express')
-const tools = require('../../utils/tools')
 const router = express.Router()
 const { check, validationResult } = require('express-validator')
 
@@ -100,10 +99,9 @@ router.put('/edit/:rid', [
   // render to edit.html
   const rid = req.params.rid
   const userId = req.user._id
-
   let { name, date, category, amount, merchant } = req.body
   date = new Date(Number(req.body.unixTimestamp))
-
+  console.log('put get data: ....', name, req.body.date, date, category, amount, merchant)
   return Record.findOne({ _id: rid, userId })
     .then(record => {
       Object.assign(record, { name, date, category, amount, merchant })
@@ -130,6 +128,5 @@ router.delete('/delete/:rid', (req, res) => {
       return res.end()
     })
 })
-
 
 module.exports = router

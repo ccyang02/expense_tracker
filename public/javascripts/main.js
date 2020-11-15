@@ -43,9 +43,11 @@ try {
 // date format converter for edit.html & new.html
 try {
   const calendarInput = document.querySelector('.calendar')
+  const timestampModifier = document.querySelector('.date-timestamp')
+  timestampModifier.value = calendarInput.defaultValue
   calendarInput.value = date2String(calendarInput.defaultValue)
 
-  const timestampModifier = document.querySelector('.date-timestamp')
+
   calendarInput.addEventListener('change', (event) => {
     timestampModifier.value = string2date(event.target.value)
   })
@@ -74,11 +76,11 @@ function string2date(timestampString) {
 function getTimeInterval(year, month) {
   const dayInterval = [-1, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
   const dayIntervalSpecial = [-1, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-  startTime = new Date(year, month, 1)
+  startTime = new Date(year, month - 1, 1)
   if (year % 4 !== 0) {
-    endTime = new Date(year, month, dayInterval[month])
+    endTime = new Date(year, month - 1, dayInterval[month])
   } else {
-    endTime = new Date(year, month, dayIntervalSpecial[month])
+    endTime = new Date(year, month - 1, dayIntervalSpecial[month])
   }
   return startTime.getTime() + '' + endTime.getTime()
 }

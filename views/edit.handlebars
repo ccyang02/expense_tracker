@@ -24,7 +24,8 @@
       <div class="col-8 my-2">
         <select class="form-control" class="dropdown btn brn-primary" name="category" value="{{data.category}}">
           {{#each categories}}
-          <option value="{{this.code}}">{{this.name}}</option>
+          <option value="{{this.code}}" {{#if (isEqual this.code ../data.category)}}selected{{/if}}>{{this.name}}
+          </option>
           {{/each}}
         </select>
       </div>
