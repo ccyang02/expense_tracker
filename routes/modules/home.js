@@ -60,6 +60,7 @@ router.get('/index', (req, res) => {
       element.icon = categories.find(c => c.code === element.category).icon
     })
     const totalAmount = (records.length === 0) ? 0 : Number(tools.getTotalAmount(records))
+    // handle query status by queryCate & queryTimestamp 
     return res.render('index', { categories, records, totalAmount, queryCate, queryTimestamp })
   }).catch(err => {
     console.log(err)

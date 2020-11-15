@@ -14,8 +14,9 @@
     <div class="row my-2">
       <div class="col-3 align-self-center text-right">*日期：</div>
       <div class="col-8">
-        <input class="calendar" type="date" name="date" placeholder="YYYY/MM/DD" value="{{data.date}}"
-          class="form-control" required>
+        <input class="calendar form-control" type="date" name="date" placeholder="YYYY/MM/DD" value="{{data.date}}"
+          required>
+        <input type="hidden" class="date-timestamp" name="unixTimestamp" value="">
       </div>
     </div>
     <div class="row my-2">

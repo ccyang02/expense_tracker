@@ -1,7 +1,10 @@
 // date format converter for index.html
 try {
-  const timeDiv = document.querySelector('.unix-timestamp')
-  timeDiv.innerHTML = date2String(timeDiv.innerText)
+  const timeDivs = document.querySelectorAll('.unix-timestamp')
+  for (timeDiv of timeDivs) {
+    timeDiv.innerHTML = date2String(timeDiv.innerText)
+  }
+
 } catch (error) {
   console.log('No data in rows.')
 }
@@ -37,25 +40,41 @@ try {
   console.log('Not in index page')
 }
 
-// date format converter for edit.html
+// date format converter for edit.html & new.html
 try {
   const calendarInput = document.querySelector('.calendar')
-  calendarInput.value = date2String(calendarInput.value)
+  console.log('>>>', calendarInput.defaultValue, calendarInput.value)
+  calendarInput.value = date2String(calendarInput.defaultValue)
+
+  const timestampModifier = document.querySelector('.date-timestamp')
+  calendarInput.addEventListener('change', (event) => {
+    timestampModifier.value = string2date(event.target.value)
+  })
 } catch (error) {
-  console.log('Not in edit page')
+  console.log('Not in edit or new page')
 }
 
-
 function date2String(unixTimestampString) {
+  console.log('>>>>', unixTimestampString)
   const unixTimestamp = Number(unixTimestampString)
   const unixDate = new Date(unixTimestamp)
 
   let mm = unixDate.getMonth()
   let dd = unixDate.getDate()
+  console.log('It is mm-dd: ', mm, dd)
   mm = (mm < 10) ? `0${mm}` : `${mm}`
   dd = (dd < 10) ? `0${dd}` : `${dd}`
-
+  console.log('date2String: ', mm, dd)
   return `${unixDate.getFullYear()}-${mm}-${dd}`
+}
+
+function string2date(timestampString) {
+  const tokens = timestampString.split('-')
+  console.log('tokens: ', tokens)
+  const unixDate = new Date(tokens[0], tokens[1], tokens[2])
+  console.log(unixDate.getTime())
+
+  return unixDate.getTime()
 }
 
 function getTimeInterval(year, month) {

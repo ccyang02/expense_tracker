@@ -45,13 +45,11 @@ router.post('/new', [
         return res.end()
       })
   } else {
-    let data = {}
     const userId = req.user._id
-    data = Object.assign(data, req.body) // name, date, category, amount
-    data.date = tools.transformDateType(data)
-    data.userId = userId
+    let { name, date, category, amount, merchant } = req.body
+    date = new Date(Number(req.body.unixTimestamp))
 
-    Record.create(data)
+    Record.create({ name, date, category, amount, merchant, userId })
       .then(() => {
         req.session.middleData = undefined
         return res.redirect('/')
@@ -76,7 +74,7 @@ router.get('/edit/:rid', (req, res) => {
         .findOne({ _id: rid, userId })
         .lean()
         .then(output => {
-          output.date = tools.date2String(output.date)
+          output.date = output.date.getTime()
           return res.render('edit', { data: output, categories, isFail })
         })
     })
@@ -102,13 +100,13 @@ router.put('/edit/:rid', [
   // render to edit.html
   const rid = req.params.rid
   const userId = req.user._id
-  let newData = {}
-  newData = Object.assign(newData, req.body) // name, date, category, amount, merchant
-  newData.date = tools.transformDateType(newData)
+
+  let { name, date, category, amount, merchant } = req.body
+  date = new Date(Number(req.body.unixTimestamp))
 
   return Record.findOne({ _id: rid, userId })
     .then(record => {
-      Object.assign(record, newData)
+      Object.assign(record, { name, date, category, amount, merchant })
       return record.save()
     })
     .then(() => {
