@@ -43,7 +43,6 @@ try {
 // date format converter for edit.html & new.html
 try {
   const calendarInput = document.querySelector('.calendar')
-  console.log('>>>', calendarInput.defaultValue, calendarInput.value)
   calendarInput.value = date2String(calendarInput.defaultValue)
 
   const timestampModifier = document.querySelector('.date-timestamp')
@@ -55,24 +54,19 @@ try {
 }
 
 function date2String(unixTimestampString) {
-  console.log('>>>>', unixTimestampString)
   const unixTimestamp = Number(unixTimestampString)
   const unixDate = new Date(unixTimestamp)
 
-  let mm = unixDate.getMonth()
+  let mm = unixDate.getMonth() + 1
   let dd = unixDate.getDate()
-  console.log('It is mm-dd: ', mm, dd)
   mm = (mm < 10) ? `0${mm}` : `${mm}`
   dd = (dd < 10) ? `0${dd}` : `${dd}`
-  console.log('date2String: ', mm, dd)
   return `${unixDate.getFullYear()}-${mm}-${dd}`
 }
 
 function string2date(timestampString) {
   const tokens = timestampString.split('-')
-  console.log('tokens: ', tokens)
-  const unixDate = new Date(tokens[0], tokens[1], tokens[2])
-  console.log(unixDate.getTime())
+  const unixDate = new Date(tokens[0], Number(tokens[1]) - 1, tokens[2])
 
   return unixDate.getTime()
 }
