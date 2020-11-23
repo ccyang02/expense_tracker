@@ -41,6 +41,11 @@ app.use((req, res, next) => {
   next()
 })
 app.use(routes)
+app.use(function (err, req, res, next) {
+  // error handler
+  console.error(err.stack);
+  res.status(500).render('error')
+});
 
 
 app.listen(PORT, () => {

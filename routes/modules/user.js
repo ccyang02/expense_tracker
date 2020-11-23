@@ -29,7 +29,7 @@ router.post('/register', [
       }
       return true
     }),
-], (req, res) => {
+], (req, res, next) => {
   const errorResults = validationResult(req)
   if (!errorResults.isEmpty()) {
     const errors = errorResults.errors.map(error => error.msg)
@@ -54,16 +54,9 @@ router.post('/register', [
             .then(() => {
               return res.redirect('/')
             })
-            .catch(error => {
-              console.log(error)
-              return res.end()
-            })
+            .catch(error => next(error))
         })
-
-
     })
-
-
 })
 
 router.get('/logout', (req, res) => {

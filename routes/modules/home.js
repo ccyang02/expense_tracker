@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
   return res.redirect('/index')
 })
 
-router.get('/index', (req, res) => {
+router.get('/index', (req, res, next) => {
   const queryCate = req.query.queryCate
   const queryTimestamp = req.query.queryTimestamp
   const promises = []
@@ -62,10 +62,7 @@ router.get('/index', (req, res) => {
     const totalAmount = (records.length === 0) ? 0 : Number(tools.getTotalAmount(records))
     // handle query status by queryCate & queryTimestamp 
     return res.render('index', { categories, records, totalAmount, queryCate, queryTimestamp })
-  }).catch(err => {
-    console.log(err)
-    return res.end()
-  })
+  }).catch(error => next(error))
 })
 
 module.exports = router

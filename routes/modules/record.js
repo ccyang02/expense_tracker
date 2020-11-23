@@ -5,7 +5,7 @@ const { check, validationResult } = require('express-validator')
 const Category = require('../../models/category.js')
 const Record = require('../../models/record.js')
 
-router.get('/new', (req, res) => {
+router.get('/new', (req, res, next) => {
   // render to new.html
   Category
     .find()
@@ -14,10 +14,7 @@ router.get('/new', (req, res) => {
     .then(categories => {
       return res.render('new', { categories })
     })
-    .catch(error => {
-      console.log(error)
-      return res.end()
-    })
+    .catch(error => next(error))
 })
 
 router.post('/new', [
@@ -27,7 +24,7 @@ router.post('/new', [
     }
     return true
   })
-], (req, res) => {
+], (req, res, next) => {
   // render to index.html
   const errorResults = validationResult(req)
   if (!errorResults.isEmpty()) {
@@ -39,10 +36,7 @@ router.post('/new', [
         req.body.errors = errors
         return res.render('new', req.body)
       })
-      .catch(error => {
-        console.log(error)
-        return res.end()
-      })
+      .catch(error => next(error))
   } else {
     const userId = req.user._id
     let { name, date, category, amount, merchant } = req.body
@@ -60,7 +54,7 @@ router.post('/new', [
   }
 })
 
-router.get('/edit/:rid', (req, res) => {
+router.get('/edit/:rid', (req, res, next) => {
   // render to edit.html
   const rid = req.params.rid
   const isFail = req.query.isFail
@@ -69,18 +63,18 @@ router.get('/edit/:rid', (req, res) => {
     .find()
     .lean()
     .then(categories => {
-      Record
+      // throw new Error('Error from Category...')
+      return Record
         .findOne({ _id: rid, userId })
         .lean()
         .then(output => {
+          // throw new Error('Error from Record...')
           output.date = output.date.getTime()
           return res.render('edit', { data: output, categories, isFail })
         })
+        .catch(error => next(error))
     })
-    .catch(error => {
-      console.log(error)
-      return res.end()
-    })
+    .catch(error => next(error))
 })
 
 router.put('/edit/:rid', [
@@ -90,7 +84,7 @@ router.put('/edit/:rid', [
     }
     return true
   })
-], (req, res) => {
+], (req, res, next) => {
   const errorResults = validationResult(req)
   if (!errorResults.isEmpty()) {
     return res.redirect(`/record/edit/${rid}?isFail=true`)
@@ -116,17 +110,14 @@ router.put('/edit/:rid', [
     })
 })
 
-router.delete('/delete/:rid', (req, res) => {
+router.delete('/delete/:rid', (req, res, next) => {
   // render to index.html
   const rid = req.params.rid
   const userId = req.user._id
   Record.findOne({ _id: rid, userId })
     .then(output => { output.remove() })
     .then(() => res.redirect('/'))
-    .catch(error => {
-      console.log(error)
-      return res.end()
-    })
+    .catch(error => next(error))
 })
 
 module.exports = router
