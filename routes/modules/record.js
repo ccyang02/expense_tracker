@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
-const { check, validationResult } = require('express-validator')
+const { registerValidationRules, registerValidate, newValidationRules,
+  newValidate, editValidationRules, editValidate } = require('../../utils/validator')
 
 const Category = require('../../models/category.js')
 const Record = require('../../models/record.js')
@@ -17,41 +18,18 @@ router.get('/new', (req, res, next) => {
     .catch(error => next(error))
 })
 
-router.post('/new', [
-  check('amount').custom(value => {
-    if (Number(value) < 0) {
-      throw new Error('金額不可為負數。')
-    }
-    return true
-  })
-], (req, res, next) => {
+router.post('/new', newValidationRules(), newValidate, (req, res, next) => {
   // render to index.html
-  const errorResults = validationResult(req)
-  if (!errorResults.isEmpty()) {
-    Category.find()
-      .lean()
-      .then(categories => {
-        const errors = errorResults.errors.map(error => error.msg)
-        req.body.categories = categories
-        req.body.errors = errors
-        return res.render('new', req.body)
-      })
-      .catch(error => next(error))
-  } else {
-    const userId = req.user._id
-    let { name, date, category, amount, merchant } = req.body
-    date = new Date(Number(req.body.unixTimestamp))
+  const userId = req.user._id
+  let { name, date, category, amount, merchant } = req.body
+  date = new Date(Number(req.body.unixTimestamp))
 
-    Record.create({ name, date, category, amount, merchant, userId })
-      .then(() => {
-        req.session.middleData = undefined
-        return res.redirect('/')
-      })
-      .catch(error => {
-        console.log(error)
-        return res.end()
-      })
-  }
+  Record.create({ name, date, category, amount, merchant, userId })
+    .then(() => {
+      req.session.middleData = undefined
+      return res.redirect('/')
+    })
+    .catch(error => next(error))
 })
 
 router.get('/edit/:rid', (req, res, next) => {
@@ -77,19 +55,7 @@ router.get('/edit/:rid', (req, res, next) => {
     .catch(error => next(error))
 })
 
-router.put('/edit/:rid', [
-  check('amount').custom(value => {
-    if (Number(value) < 0) {
-      throw new Error('金額不可為負數。')
-    }
-    return true
-  })
-], (req, res, next) => {
-  const errorResults = validationResult(req)
-  if (!errorResults.isEmpty()) {
-    return res.redirect(`/record/edit/${rid}?isFail=true`)
-  }
-
+router.put('/edit/:rid', editValidationRules(), editValidate, (req, res, next) => {
   // render to edit.html
   const rid = req.params.rid
   const userId = req.user._id
