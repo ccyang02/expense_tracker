@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const { registerValidationRules, registerValidate, newValidationRules,
-  newValidate, editValidationRules, editValidate } = require('../../utils/validator')
+  newValidate, editValidationRules, editValidate } = require('../../middleware/validator')
 
 const Category = require('../../models/category.js')
 const Record = require('../../models/record.js')

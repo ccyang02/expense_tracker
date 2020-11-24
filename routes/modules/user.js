@@ -3,7 +3,7 @@ const passport = require('passport')
 const bcrypt = require('bcryptjs')
 const router = express.Router()
 const User = require('../../models/user')
-const { registerValidationRules, registerValidate } = require('../../utils/validator')
+const { registerValidationRules, registerValidate } = require('../../middleware/validator')
 
 router.get('/login', (req, res) => {
   return res.render('login')
